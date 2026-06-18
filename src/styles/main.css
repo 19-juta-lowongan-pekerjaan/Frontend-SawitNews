@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#F8FAFC] text-[#1A202C] dark:bg-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-200;
+  }
+}
+
+/* Custom Scrollbar for modern touch */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 transition-colors hover:bg-gray-400;
+  border-radius: 4px;
+}
+
+/* Premium Animations */
+.hover-scale {
+  @apply transition-transform duration-300 hover:scale-[1.02];
+}
+
+.hover-glow {
+  @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-primary-light/50;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  @apply bg-white/80 backdrop-blur-md border border-white/20;
+}
+
+/* Quill Editor Styles Overrides */
+.ql-editor {
+  min-height: 250px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.ql-container.ql-snow {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-color: #E2E8F0 !important;
+}
+
+.ql-toolbar.ql-snow {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-color: #E2E8F0 !important;
+  background-color: #F8FAFC;
+}
+
+/* Custom Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
