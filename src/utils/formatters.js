@@ -67,8 +67,8 @@ export function getBadge(name) {
 export function getImageUrl(path) {
   if (!path) return '';
   if (path.startsWith('http') || path.startsWith('data:')) return path;
-  
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
+  const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '/api');
   const origin = baseUrl.replace(/\/api\/?$/, '');
   
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
