@@ -51,12 +51,12 @@
           <!-- Like Comment -->
           <button 
             @click="likeComment(comment.id)"
-            class="flex items-center gap-1 text-slate-400 hover:text-red-500 transition-colors"
+            :class="['flex items-center gap-1 transition-colors', comment.isLiked ? 'text-red-500' : 'text-slate-400 hover:text-red-500']"
           >
             <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
-            <span class="dark:text-slate-400 text-slate-500">{{ comment.likes }}</span>
+            <span :class="[comment.isLiked ? 'text-red-500' : 'dark:text-slate-400 text-slate-500']">{{ comment.likes }}</span>
           </button>
 
           <!-- Toggle Reply Form -->
@@ -133,12 +133,12 @@
             <div class="flex items-center gap-3 text-xxs font-semibold pl-1">
               <button 
                 @click="likeComment(reply.id)"
-                class="flex items-center gap-1 text-slate-400 hover:text-red-500"
+                :class="['flex items-center gap-1 transition-colors', reply.isLiked ? 'text-red-500' : 'text-slate-400 hover:text-red-500']"
               >
                 <svg class="h-3 w-3 fill-current" viewBox="0 0 24 24">
                   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 </svg>
-                <span>{{ reply.likes }}</span>
+                <span :class="[reply.isLiked ? 'text-red-500' : '']">{{ reply.likes }}</span>
               </button>
             </div>
           </div>

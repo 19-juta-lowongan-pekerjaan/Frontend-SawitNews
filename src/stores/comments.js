@@ -28,11 +28,13 @@ const formatComment = (comment) => {
 export const useCommentStore = defineStore('comments', {
   state: () => ({
     comments: [],
-    loading: false
+    loading: false,
+    articleId: null,
   }),
   actions: {
     async fetchComments(articleId) {
       this.loading = true
+      this.articleId = articleId
       const uiStore = useUiStore()
       try {
         const res = await commentsApi.getComments(articleId)
@@ -96,19 +98,8 @@ export const useCommentStore = defineStore('comments', {
     async likeComment(id) {
       try {
         await commentsApi.likeComment(id)
-        
-        // Find comment or nested reply and increment locally
-        const comment = this.comments.find(c => c.id === id)
-        if (comment) {
-          comment.likes++
-        } else {
-          for (const c of this.comments) {
-            const reply = c.replies?.find(r => r.id === id)
-            if (reply) {
-              reply.likes++
-              break
-            }
-          }
+        if (this.articleId) {
+          await this.fetchComments(this.articleId)
         }
       } catch (err) {
         console.error('Failed to like comment:', err)

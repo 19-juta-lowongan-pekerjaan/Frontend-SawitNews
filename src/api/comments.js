@@ -11,6 +11,6 @@ export default {
     return api.delete(`/comments/${id}`)
   },
   likeComment(id) {
-    return api.post(`/comments/${id}/like`)
+    return api.post(`/comments/${id}/toggle-like`)
   }
 }
