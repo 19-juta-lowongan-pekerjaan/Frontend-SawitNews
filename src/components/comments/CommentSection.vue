@@ -26,7 +26,7 @@
         <!-- Comment Card Header -->
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <img :src="comment.author?.avatar" class="h-9 w-9 rounded-full object-cover ring-2 ring-primary/5" />
+            <img :src="getImageUrl(comment.author?.avatar) || getDefaultAvatar(comment.author?.name || '?')" class="h-9 w-9 rounded-full object-cover ring-2 ring-primary/5" @error="(e) => e.target.src = getDefaultAvatar(comment.author?.name || '?')" />
             <div class="flex flex-col leading-tight">
               <div class="flex items-center gap-1.5">
                 <span class="font-bold text-sm text-slate-800 dark:text-white">{{ comment.author?.name }}</span>
@@ -112,7 +112,7 @@
           >
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <img :src="reply.author?.avatar" class="h-7 w-7 rounded-full object-cover" />
+                <img :src="getImageUrl(reply.author?.avatar) || getDefaultAvatar(reply.author?.name || '?')" class="h-7 w-7 rounded-full object-cover" @error="(e) => e.target.src = getDefaultAvatar(reply.author?.name || '?')" />
                 <div class="flex flex-col leading-none">
                   <div class="flex items-center gap-1">
                     <span class="font-bold text-xs text-slate-800 dark:text-white">{{ reply.author?.name }}</span>
@@ -158,7 +158,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useCommentStore } from '../../stores/comments'
 import { useAuthStore } from '../../stores/auth'
 import { useUiStore } from '../../stores/ui'
-import { formatRelativeDate, getBadge } from '../../utils/formatters'
+import { formatRelativeDate, getBadge, getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 import CommentForm from './CommentForm.vue'
 import LoadingSpinner from '../common/LoadingSpinner.vue'
 

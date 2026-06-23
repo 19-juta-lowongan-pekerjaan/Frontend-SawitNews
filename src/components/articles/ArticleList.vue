@@ -12,7 +12,7 @@
     
     <div 
       v-else 
-      class="bg-white rounded-3xl border border-gray-100 shadow-sm p-12 text-center flex flex-col items-center justify-center space-y-4 dark:bg-slate-800 dark:border-slate-700"
+      class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-12 text-center flex flex-col items-center justify-center space-y-4 dark:bg-slate-800 dark:border-slate-700"
     >
       <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-full text-slate-400 dark:text-slate-500">
         <svg class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -80,7 +80,11 @@ const handleSubmit = async (data) => {
 
     const updatedArticle = await articleStore.updateArticle(route.params.id, payload)
     if (!data.isDraft && updatedArticle) {
-       await articleStore.publishArticle(updatedArticle.id)
+      try {
+        await articleStore.publishArticle(updatedArticle.id)
+      } catch (pubErr) {
+        console.error('Failed to publish updated article', pubErr)
+      }
     }
     router.push('/artikel-saya')
   } catch (err) {

@@ -72,6 +72,7 @@
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useArticleStore } from '../stores/articles'
 import { useUiStore } from '../stores/ui'
+import { getDefaultAvatar } from '../utils/formatters'
 import adminApi from '../api/admin'
 import AdminStats from '../components/admin/AdminStats.vue'
 import VerificationQueue from '../components/admin/VerificationQueue.vue'
@@ -130,7 +131,7 @@ const fetchUsersList = async () => {
       role: u.role,
       rank: u.rank?.name || 'Benih',
       suspended: !u.isActive,
-      avatar: u.avatar || 'https://www.gravatar.com/avatar/?d=mp'
+      avatar: u.avatar || getDefaultAvatar(u.displayName || u.username || '?')
     }))
   } catch (err) {
     console.error('Failed to fetch admin users:', err)

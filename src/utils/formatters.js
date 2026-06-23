@@ -74,3 +74,55 @@ export function getImageUrl(path) {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   return `${origin}${normalizedPath}`;
 }
+
+/**
+ * Generate an inline SVG data URI avatar from a name/username.
+ * Returns a "data:" URI so no external requests are made.
+ * @param {string} name - Full name or username
+ * @param {number} size - Size in px (default 64)
+ * @returns {string} data: URI of an SVG avatar
+ */
+export function getDefaultAvatar(name = '?', size = 64) {
+  const colors = [
+    ['#2C7A4D', '#1a4d2e'], // primary green
+    ['#1E3A5F', '#0f2040'], // accent blue
+    ['#7c3aed', '#5b21b6'], // purple
+    ['#b45309', '#92400e'], // amber
+    ['#0e7490', '#0c4a6e'], // teal
+    ['#be185d', '#9d174d'], // pink
+    ['#15803d', '#14532d'], // emerald
+    ['#c2410c', '#9a3412'], // orange
+  ]
+
+  const initials = (name || '?')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(w => w[0].toUpperCase())
+    .join('')
+    .slice(0, 2) || '?'
+
+  // Pick color based on sum of char codes for consistency
+  const charSum = (name || '?').split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+  const [bg, bg2] = colors[charSum % colors.length]
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <defs>
+      <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${bg}"/>
+        <stop offset="100%" stop-color="${bg2}"/>
+      </linearGradient>
+    </defs>
+    <rect width="${size}" height="${size}" rx="${size / 2}" fill="url(#g)"/>
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central"
+      font-family="Inter, Roboto, sans-serif"
+      font-size="${size * 0.38}"
+      font-weight="700"
+      fill="#ffffff"
+      letter-spacing="1">
+      ${initials}
+    </text>
+  </svg>`
+
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
+}

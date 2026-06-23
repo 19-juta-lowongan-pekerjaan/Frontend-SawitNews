@@ -2,6 +2,29 @@ import { defineStore } from 'pinia'
 import commentsApi from '../api/comments'
 import { useUiStore } from './ui'
 
+const formatComment = (comment) => {
+  if (!comment) return null
+  
+  const mapUserToAuthor = (user) => {
+    if (!user) return null
+    return {
+      avatar: user.avatar || '',
+      name: user.displayName || user.username || '',
+      username: user.username || '',
+      rank: user.rank?.name || user.rank || 'Pemula'
+    }
+  }
+
+  return {
+    ...comment,
+    author: mapUserToAuthor(comment.user),
+    replies: Array.isArray(comment.replies) ? comment.replies.map(r => ({
+      ...r,
+      author: mapUserToAuthor(r.user)
+    })) : []
+  }
+}
+
 export const useCommentStore = defineStore('comments', {
   state: () => ({
     comments: [],
@@ -13,8 +36,7 @@ export const useCommentStore = defineStore('comments', {
       const uiStore = useUiStore()
       try {
         const res = await commentsApi.getComments(articleId)
-        // Backend returns comments array under data field
-        this.comments = res.data.data || []
+        this.comments = (res.data.data || []).map(formatComment)
       } catch (err) {
         console.error('Failed to fetch comments:', err)
         uiStore.showNotification(err.response?.data?.message || 'Gagal mengambil komentar.', 'error')
@@ -27,8 +49,12 @@ export const useCommentStore = defineStore('comments', {
     async postComment(articleId, content, parentId = null) {
       const uiStore = useUiStore()
       try {
-        const res = await commentsApi.postComment(articleId, { content, parentId })
-        const newComment = res.data.data
+        const payload = { content }
+        if (parentId) {
+          payload.parentId = parentId
+        }
+        const res = await commentsApi.postComment(articleId, payload)
+        const newComment = formatComment(res.data.data)
         
         if (parentId) {
           const parent = this.comments.find(c => c.id === parentId)

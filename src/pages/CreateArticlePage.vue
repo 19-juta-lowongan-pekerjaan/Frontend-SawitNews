@@ -62,8 +62,6 @@ const handleSubmit = async (data) => {
     if (data.anonymous) payload.append('isAnonymous', data.anonymous)
     
     if (data.categoryId) {
-      // Backend expects categoryIds as an array. With multer, appending multiple times works,
-      // or we can append it as a single array item.
       payload.append('categoryIds[]', data.categoryId)
     }
     
@@ -73,7 +71,11 @@ const handleSubmit = async (data) => {
 
     const newArticle = await articleStore.createArticle(payload)
     if (!data.isDraft && newArticle && newArticle.id) {
-      await articleStore.publishArticle(newArticle.id)
+      try {
+        await articleStore.publishArticle(newArticle.id)
+      } catch (pubErr) {
+        console.error('Failed to publish created article', pubErr)
+      }
     }
     router.push('/artikel-saya')
   } catch (err) {

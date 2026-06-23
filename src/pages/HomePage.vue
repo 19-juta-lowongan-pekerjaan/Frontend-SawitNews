@@ -38,7 +38,9 @@
         <TrendingSidebar :articles="articleStore.trendingArticles" />
 
         <!-- Categories Sidebar Navigation -->
-        <AppSidebar />
+        <div class="hidden lg:block">
+          <AppSidebar />
+        </div>
 
         <!-- Newsletter Signup Premium Box -->
         <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden space-y-4 border border-slate-800">

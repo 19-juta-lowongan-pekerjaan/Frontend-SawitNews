@@ -4,9 +4,10 @@
       <div class="flex gap-3">
         <!-- Current User Avatar -->
         <img 
-          :src="authStore.user?.avatar || 'https://www.gravatar.com/avatar/?d=mp'" 
+          :src="getImageUrl(authStore.user?.avatar) || getDefaultAvatar(authStore.user?.displayName || authStore.user?.username || '?')" 
           class="h-9 w-9 rounded-full object-cover" 
           alt="Current User Avatar"
+          @error="(e) => e.target.src = getDefaultAvatar(authStore.user?.displayName || authStore.user?.username || '?')"
         />
         
         <!-- Input Area -->
@@ -58,6 +59,7 @@
 import { ref } from 'vue'
 import { useAuthStore } from '../../stores/auth'
 import { useUiStore } from '../../stores/ui'
+import { getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 
 const authStore = useAuthStore()
 const uiStore = useUiStore()

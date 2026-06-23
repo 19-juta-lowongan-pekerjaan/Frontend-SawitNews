@@ -32,9 +32,11 @@ const processQueue = (error, token = null) => {
 api.interceptors.response.use(
   response => response,
   async error => {
-    const originalRequest = error.config
+    const originalRequest = error?.config
+    const url = originalRequest?.url ? String(originalRequest.url).toLowerCase() : ''
+    const isAuthRoute = url.includes('login') || url.includes('register') || url.includes('token')
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest?._retry && !isAuthRoute) {
       const refreshToken = localStorage.getItem('refreshToken')
 
       if (!refreshToken) {

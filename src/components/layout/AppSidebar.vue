@@ -71,28 +71,6 @@
           </button>
         </nav>
       </div>
-
-      <!-- Quick CPO price widget simulator in sidebar -->
-      <div class="mt-6 bg-gradient-to-br from-primary to-primary-hover text-white rounded-2xl shadow-xl p-5 relative overflow-hidden">
-        <div class="absolute -right-4 -bottom-4 opacity-10">
-          <svg class="h-32 w-32" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
-          </svg>
-        </div>
-        <div class="relative z-10 space-y-3">
-          <h4 class="text-xs font-semibold uppercase tracking-wider opacity-90">{{ uiStore.t('cpo_price_title') }}</h4>
-          <div class="flex items-baseline gap-1.5">
-            <span class="text-2xl font-bold">Rp 14.850</span>
-            <span class="text-xs font-medium">/ Kg</span>
-          </div>
-          <div class="flex items-center gap-1.5 text-xs text-green-200">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-            <span>+Rp 120 (+0.81%) {{ uiStore.t('cpo_price_suffix') }}</span>
-          </div>
-        </div>
-      </div>
     </aside>
   </div>
 </template>

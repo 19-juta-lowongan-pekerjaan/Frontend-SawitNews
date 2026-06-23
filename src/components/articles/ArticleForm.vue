@@ -11,7 +11,9 @@
           required 
           :placeholder="uiStore.t('form_article_title_placeholder')" 
           class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-slate-900 dark:border-slate-800 dark:text-white"
+          :class="{'border-red-500 focus:ring-red-500': errors.title}"
         />
+        <p v-if="errors.title" class="text-xs text-red-500 font-semibold">{{ errors.title }}</p>
       </div>
 
       <!-- Category & Image URL Grid -->
@@ -25,6 +27,7 @@
             required 
             @change="handleCategoryChange"
             class="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-slate-900 dark:border-slate-800 dark:text-white"
+            :class="{'border-red-500 focus:ring-red-500': errors.categoryId}"
           >
             <option value="" disabled>{{ uiStore.t('form_article_category_placeholder') }}</option>
             <option 
@@ -36,6 +39,7 @@
             </option>
             <option value="NEW_CATEGORY" class="font-bold text-primary dark:text-primary-light">{{ uiStore.t('form_article_new_category') }}</option>
           </select>
+          <p v-if="errors.categoryId" class="text-xs text-red-500 font-semibold">{{ errors.categoryId }}</p>
 
           <!-- Custom Category Name input -->
           <div v-if="showNewCategoryInput" class="pt-2 space-y-2 animate-slide">
@@ -123,7 +127,10 @@
       <!-- Rich Text Content Editor -->
       <div class="space-y-2">
         <label class="text-sm font-bold text-slate-800 dark:text-white">{{ uiStore.t('form_article_content') }}</label>
-        <RichTextEditor v-model="formData.content" />
+        <div :class="{'border border-red-500 rounded-2xl overflow-hidden': errors.content}">
+          <RichTextEditor v-model="formData.content" />
+        </div>
+        <p v-if="errors.content" class="text-xs text-red-500 font-semibold">{{ errors.content }}</p>
       </div>
 
       <!-- Settings Panel (Anonymous Toggle & Draft Option) -->
@@ -166,7 +173,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { useCategoryStore } from '../../stores/categories'
 import { useUiStore } from '../../stores/ui'
 import RichTextEditor from './RichTextEditor.vue'
@@ -197,12 +204,18 @@ const formData = reactive({
   anonymous: false
 })
 
+const errors = reactive({
+  title: '',
+  categoryId: '',
+  content: ''
+})
+
 onMounted(() => {
   if (props.initialData) {
     formData.title = props.initialData.title || ''
     formData.categoryId = props.initialData.categoryId || ''
     formData.featuredImage = props.initialData.featuredImage || ''
-    formData.summary = props.initialData.summary || ''
+    formData.summary = props.initialData.summary || props.initialData.excerpt || ''
     formData.content = props.initialData.content || ''
     formData.anonymous = props.initialData.anonymous || false
   }
@@ -259,7 +272,72 @@ const handleImageUpload = (event) => {
   reader.readAsDataURL(file)
 }
 
+const getPlainTextLength = (html) => {
+  if (!html) return 0
+  return html.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim().length
+}
+
+const validateForm = () => {
+  let isValid = true
+  errors.title = ''
+  errors.categoryId = ''
+  errors.content = ''
+
+  if (!formData.title.trim()) {
+    errors.title = uiStore.lang === 'id' ? 'Judul wajib diisi' : 'Title is required'
+    isValid = false
+  } else if (formData.title.trim().length < 5) {
+    errors.title = uiStore.lang === 'id' ? 'Judul minimal 5 karakter' : 'Title must be at least 5 characters'
+    isValid = false
+  }
+
+  if (!formData.categoryId) {
+    errors.categoryId = uiStore.lang === 'id' ? 'Kategori wajib dipilih' : 'Category is required'
+    isValid = false
+  }
+
+  const plainTextLen = getPlainTextLength(formData.content)
+  if (plainTextLen === 0) {
+    errors.content = uiStore.lang === 'id' ? 'Konten wajib diisi' : 'Content is required'
+    isValid = false
+  } else if (plainTextLen < 50) {
+    errors.content = uiStore.lang === 'id' 
+      ? `Konten minimal 50 karakter (saat ini ${plainTextLen} karakter)` 
+      : `Content must be at least 50 characters (currently ${plainTextLen} characters)`
+    isValid = false
+  }
+
+  return isValid
+}
+
+watch(() => formData.title, (newVal) => {
+  if (newVal.trim().length >= 5) {
+    errors.title = ''
+  }
+})
+
+watch(() => formData.categoryId, (newVal) => {
+  if (newVal) {
+    errors.categoryId = ''
+  }
+})
+
+watch(() => formData.content, (newVal) => {
+  if (getPlainTextLength(newVal) >= 50) {
+    errors.content = ''
+  }
+})
+
 const submitForm = (isDraft) => {
+  if (!validateForm()) {
+    uiStore.showNotification(
+      uiStore.lang === 'id' 
+        ? 'Mohon periksa kembali form input Anda.' 
+        : 'Please check your form inputs.', 
+      'error'
+    )
+    return
+  }
   emit('submit', {
     ...formData,
     isDraft: isDraft === true
