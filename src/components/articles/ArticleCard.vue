@@ -43,10 +43,10 @@
         <!-- Author Info -->
         <div class="flex items-center gap-2">
           <img 
-            :src="article.author?.avatar || 'https://www.gravatar.com/avatar/?d=mp'" 
+            :src="getImageUrl(article.author?.avatar) || getDefaultAvatar(article.author?.displayName || article.author?.username || '?')" 
             class="h-7 w-7 rounded-full object-cover"
             alt="Author Avatar"
-            @error="(e) => e.target.src = 'https://www.gravatar.com/avatar/?d=mp'"
+            @error="(e) => e.target.src = getDefaultAvatar(article.author?.displayName || article.author?.username || '?')"
           />
           <div class="flex flex-col text-xxs leading-none">
             <span class="font-bold text-gray-700 dark:text-gray-200">
@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { formatRelativeDate, getImageUrl } from '../../utils/formatters'
+import { formatRelativeDate, getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 import { useUiStore } from '../../stores/ui'
 
 const uiStore = useUiStore()

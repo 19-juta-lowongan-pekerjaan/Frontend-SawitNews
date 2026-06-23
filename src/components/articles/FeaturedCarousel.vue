@@ -10,9 +10,10 @@
       >
         <!-- Background Image with Overlay -->
         <img 
-          :src="slide.featuredImage" 
+          :src="getImageUrl(slide.featuredImage) || 'https://images.unsplash.com/photo-1597430162074-a1185088574e?auto=format&fit=crop&w=800&q=80'" 
           class="w-full h-full object-cover opacity-80 group-hover:scale-102 transition-transform duration-700" 
           :alt="slide.title"
+          @error="(e) => e.target.src = 'https://images.unsplash.com/photo-1597430162074-a1185088574e?auto=format&fit=crop&w=800&q=80'"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent"></div>
         
@@ -42,9 +43,9 @@
           <div class="flex items-center gap-4 text-xs text-slate-300 pt-2 font-medium">
             <span class="flex items-center gap-1.5">
               <img 
-                :src="slide.author?.avatar || 'https://www.gravatar.com/avatar/?d=mp'" 
+                :src="getImageUrl(slide.author?.avatar) || getDefaultAvatar(slide.isAnonymous ? 'Anonymous' : (slide.authorDisplayName || slide.author?.displayName || slide.author?.username || '?'))" 
                 class="h-6 w-6 rounded-full object-cover ring-2 ring-white/10" 
-                @error="(e) => e.target.src = 'https://www.gravatar.com/avatar/?d=mp'"
+                @error="(e) => e.target.src = getDefaultAvatar(slide.author?.username || '?')"
               />
               {{ slide.isAnonymous ? 'Anonymous' : (slide.authorDisplayName || slide.author?.displayName || slide.author?.username || '') }}
             </span>
@@ -95,7 +96,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { formatDate } from '../../utils/formatters'
+import { formatDate, getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 
 const props = defineProps({
   articles: {

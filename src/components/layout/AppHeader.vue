@@ -16,7 +16,7 @@
           <!-- Logo -->
           <router-link to="/" class="flex items-center gap-2 group ml-2 md:ml-0">
             <img 
-              src="/Gemini_Generated_Image_bey94kbey94kbey9-removebg-preview.png"
+              src="/icon-sawit.svg"
               class="h-8 w-8 object-contain transition-transform duration-200 group-hover:scale-105 dark:brightness-0 dark:invert"
               alt="SawitNews Logo"
             />
@@ -38,7 +38,7 @@
           <!-- Theme Toggle -->
           <button 
             @click="uiStore.toggleTheme()"
-            class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800 transition-colors"
+            class="hidden md:inline-flex p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800 transition-colors"
             title="Ganti Tema"
           >
             <!-- Sun -->
@@ -54,7 +54,7 @@
           <!-- Language Toggle -->
           <button 
             @click="uiStore.toggleLang()"
-            class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-1 text-xs font-black uppercase tracking-wider"
+            class="hidden md:flex p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800 transition-colors items-center justify-center gap-1 text-xs font-black uppercase tracking-wider"
             :title="uiStore.lang === 'id' ? 'Switch to English' : 'Ganti ke Bahasa Indonesia'"
           >
             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,9 +67,10 @@
           <div v-if="authStore.isAuthenticated" class="relative group">
             <button class="flex items-center gap-2 focus:outline-none py-1">
               <img 
-                :src="getImageUrl(authStore.user?.avatar) || 'https://www.gravatar.com/avatar/?d=mp'" 
+                :src="getImageUrl(authStore.user?.avatar) || getDefaultAvatar(authStore.user?.displayName || authStore.user?.name || authStore.user?.username || '?')" 
                 class="h-9 w-9 rounded-xl object-cover ring-2 ring-primary/20 hover:ring-primary transition-all duration-200"
                 alt="User Avatar"
+                @error="(e) => e.target.src = getDefaultAvatar(authStore.user?.displayName || authStore.user?.username || '?')"
               />
               <span class="hidden sm:inline text-sm font-semibold text-gray-700 dark:text-gray-200">
                 {{ authStore.user?.name }}
@@ -168,7 +169,7 @@
 import { useAuthStore } from '../../stores/auth'
 import { useUiStore } from '../../stores/ui'
 import { useRouter } from 'vue-router'
-import { getImageUrl } from '../../utils/formatters'
+import { getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 
 const authStore = useAuthStore()
 const uiStore = useUiStore()

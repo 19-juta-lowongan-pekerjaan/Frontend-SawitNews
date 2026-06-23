@@ -45,57 +45,36 @@
       </div>
     </div>
 
-    <!-- Key Pillars Section -->
-    <div class="max-w-4xl mx-auto space-y-6">
-      <h2 class="text-xl md:text-2xl font-black text-accent dark:text-white text-center">{{ uiStore.t('about_pillars_title') }}</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <!-- 1. Jurnalisme Independen -->
-        <div class="p-6 text-center space-y-3">
-          <span class="inline-block text-primary mb-2">
-            <svg class="w-10 h-10 text-primary mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="2" x2="12" y2="22"></line>
-              <line x1="5" y1="7" x2="19" y2="7"></line>
-              <path d="M5 7L2 17h6L5 7z"></path>
-              <path d="M19 7l-3 10h6l-3-10z"></path>
-            </svg>
-          </span>
-          <h4 class="font-bold text-sm text-slate-800 dark:text-white">{{ uiStore.t('about_pillar1_title') }}</h4>
-          <p class="text-xs text-gray-500 dark:text-gray-400 leading-normal">
-            {{ uiStore.t('about_pillar1_desc') }}
-          </p>
+    
+    <!-- Founders Section -->
+    <div class="max-w-4xl mx-auto space-y-8 pt-8 border-t border-gray-100 dark:border-slate-800 mt-12">
+      <h2 class="text-xl md:text-2xl font-black text-accent dark:text-white text-center">{{ uiStore.t('about_developers_title') }}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Zhao Han -->
+        <div class="bg-white rounded-3xl border border-gray-100 p-6 flex flex-col items-center text-center shadow-sm dark:bg-slate-800 dark:border-slate-700 hover:shadow-md transition-shadow">
+          <img src="/zhao.png" alt="Zhao Han" class="w-32 h-32 rounded-full object-cover mb-4 ring-4 ring-primary/20 shadow-lg">
+          <h3 class="text-lg font-bold text-slate-800 dark:text-white">Zhao Han</h3>
+          <p class="text-sm font-semibold text-primary mb-4">Co-Founder & Developer</p>
+          <blockquote class="text-sm italic text-gray-600 dark:text-slate-300 relative px-6 py-2">
+            <span class="absolute top-0 left-0 text-4xl text-primary/20 leading-none font-serif">"</span>
+            McLaren Lu Warne Ape Bosss!!!
+            <span class="absolute bottom-0 right-0 text-4xl text-primary/20 leading-none font-serif transform translate-y-4">"</span>
+          </blockquote>
         </div>
 
-        <!-- 2. Pemberdayaan Reputasi -->
-        <div class="p-6 text-center space-y-3">
-          <span class="inline-block text-primary mb-2">
-            <svg class="w-10 h-10 text-primary mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-              <path d="M4 22h16"></path>
-              <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path>
-              <path d="M12 2a5 5 0 0 0-5 5v3c0 2.2 1.8 4 4 4h2c2.2 0 4-1.8 4-4V7a5 5 0 0 0-5-5Z"></path>
-            </svg>
-          </span>
-          <h4 class="font-bold text-sm text-slate-800 dark:text-white">{{ uiStore.t('about_pillar2_title') }}</h4>
-          <p class="text-xs text-gray-500 dark:text-gray-400 leading-normal">
-            {{ uiStore.t('about_pillar2_desc') }}
-          </p>
+        <!-- FayBoy -->
+        <div class="bg-white rounded-3xl border border-gray-100 p-6 flex flex-col items-center text-center shadow-sm dark:bg-slate-800 dark:border-slate-700 hover:shadow-md transition-shadow">
+          <img src="/fay.png" alt="FayBoy" class="w-32 h-32 rounded-full object-cover mb-4 ring-4 ring-primary/20 shadow-lg">
+          <h3 class="text-lg font-bold text-slate-800 dark:text-white">FayBoy</h3>
+          <p class="text-sm font-semibold text-primary mb-4">Co-Founder & Developer</p>
+          <blockquote class="text-sm italic text-gray-600 dark:text-slate-300 relative px-6 py-2">
+            <span class="absolute top-0 left-0 text-4xl text-primary/20 leading-none font-serif">"</span>
+            Yesterday is history, Tomorrow is a mystery but today is a gift. That is why it's called a present.
+            <span class="absolute bottom-0 right-0 text-4xl text-primary/20 leading-none font-serif transform translate-y-4">"</span>
+          </blockquote>
         </div>
 
-        <!-- 3. Data Pasar CPO -->
-        <div class="p-6 text-center space-y-3">
-          <span class="inline-block text-primary mb-2">
-            <svg class="w-10 h-10 text-primary mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="20" x2="18" y2="10"></line>
-              <line x1="12" y1="20" x2="12" y2="4"></line>
-              <line x1="6" y1="20" x2="6" y2="14"></line>
-            </svg>
-          </span>
-          <h4 class="font-bold text-sm text-slate-800 dark:text-white">{{ uiStore.t('about_pillar3_title') }}</h4>
-          <p class="text-xs text-gray-500 dark:text-gray-400 leading-normal">
-            {{ uiStore.t('about_pillar3_desc') }}
-          </p>
-        </div>
       </div>
     </div>
   </div>

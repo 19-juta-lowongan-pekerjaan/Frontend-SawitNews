@@ -23,9 +23,10 @@
         <!-- Author Profile -->
         <div class="flex items-center gap-3">
           <img 
-            :src="article.author?.avatar || 'https://www.gravatar.com/avatar/?d=mp'" 
+            :src="getImageUrl(article.author?.avatar) || getDefaultAvatar(article.isAnonymous ? 'Anonymous' : (article.authorDisplayName || article.author?.displayName || article.author?.username || '?'))" 
             class="h-11 w-11 rounded-full object-cover ring-2 ring-primary/10"
             alt="Author Avatar"
+            @error="(e) => e.target.src = getDefaultAvatar(article.authorDisplayName || article.author?.username || '?')"
           />
           <div class="flex flex-col leading-tight">
             <div class="flex items-center gap-1.5">
@@ -155,7 +156,7 @@
 import { computed } from 'vue'
 import { useArticleStore } from '../../stores/articles'
 import { useUiStore } from '../../stores/ui'
-import { formatDate, getBadge, getImageUrl } from '../../utils/formatters'
+import { formatDate, getBadge, getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 import CommentSection from '../comments/CommentSection.vue'
 
 const props = defineProps({

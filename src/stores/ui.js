@@ -257,12 +257,12 @@ export const useUiStore = defineStore('ui', {
 
           // About Page
           about_hero_tag: 'Tentang Kami',
-          about_hero_title: 'Menghubungkan Komunitas Sawit Indonesia',
-          about_hero_desc: 'SawitNews adalah platform portal berita independen terdepan yang didedikasikan untuk industri kelapa sawit di Indonesia.',
+          about_hero_title: 'Portal Berita & Opini Bebas Kelapa Sawit',
+          about_hero_desc: 'SawitNews adalah website berita independen kelapa sawit tempat semua orang bebas bertukar wawasan, menganalisis perkembangan industri, dan mengutarakan opini secara merdeka.',
           about_vision_title: 'Visi Kami',
-          about_vision_desc: 'Menjadi pusat rujukan informasi industri kelapa sawit yang paling terpercaya, netral, dan mengedukasi di Indonesia, sekaligus memberdayakan petani sawit rakyat melalui teknologi informasi.',
+          about_vision_desc: 'Menjadi wadah berita terpercaya di mana pelaku industri, petani, dan masyarakat umum dapat bertukar pendapat secara objektif demi kemajuan industri kelapa sawit.',
           about_mission_title: 'Misi Kami',
-          about_mission_desc: 'Menyajikan berita analisis pasar dan harga CPO yang akurat, memberikan edukasi agronomi praktis bagi petani mandiri, serta menyediakan wadah kolaborasi terbuka bagi akademisi, pelaku industri, dan regulasi pemerintah.',
+          about_mission_desc: 'Menyajikan berita kelapa sawit yang aktual dan transparan, sekaligus menyediakan ruang diskusi terbuka yang merdeka bagi pembaca untuk menyuarakan analisis dan pandangannya.',
           about_pillars_title: 'Pilar Utama Layanan Kami',
           about_pillar1_title: 'Jurnalisme Independen',
           about_pillar1_desc: 'Menyajikan berita berimbang tanpa bias, bersandar pada fakta lapangan dan regulasi berwawasan lingkungan.',
@@ -270,6 +270,7 @@ export const useUiStore = defineStore('ui', {
           about_pillar2_desc: 'Menghargai setiap opini dan riset kontributor dengan skema peringkat gamifikasi terintegrasi.',
           about_pillar3_title: 'Data Pasar CPO',
           about_pillar3_desc: 'Menyediakan data pergerakan pasar CPO yang kredibel untuk membantu pelaku usaha mengambil keputusan logistik.',
+          about_developers_title: 'Tim Pengembang',
 
           // Subscription
           subscription_title: 'Pilih Paket Berlangganan',
@@ -573,12 +574,12 @@ export const useUiStore = defineStore('ui', {
 
           // About Page
           about_hero_tag: 'About Us',
-          about_hero_title: 'Connecting the Indonesian Sawit Community',
-          about_hero_desc: 'SawitNews is the leading independent news portal platform dedicated to the sawit industry in Indonesia.',
+          about_hero_title: 'Independent Palm Oil News & Open Discussion Portal',
+          about_hero_desc: 'SawitNews is an independent palm oil news website where everyone is free to exchange insights, analyze industry developments, and voice opinions openly.',
           about_vision_title: 'Our Vision',
-          about_vision_desc: 'To be the most trusted, neutral, and educational source of reference for the sawit industry in Indonesia, while empowering smallholder sawit farmers through information technology.',
+          about_vision_desc: 'To be a trusted news platform where industry players, farmers, and the public can objectively exchange opinions for the progress of the palm oil industry.',
           about_mission_title: 'Our Mission',
-          about_mission_desc: 'To provide accurate market analysis and CPO price updates, offer practical agronomy education for independent farmers, and create an open collaboration space for academics, industry players, and government regulators.',
+          about_mission_desc: 'To provide actual and transparent palm oil news, while offering a free open discussion space for readers to share their analysis and views.',
           about_pillars_title: 'Core Pillars of Our Services',
           about_pillar1_title: 'Independent Journalism',
           about_pillar1_desc: 'Providing balanced news without bias, relying on field facts and environmentally conscious regulations.',
@@ -586,6 +587,7 @@ export const useUiStore = defineStore('ui', {
           about_pillar2_desc: 'Appreciating every contributor\'s opinion and research with an integrated gamified ranking scheme.',
           about_pillar3_title: 'CPO Market Data',
           about_pillar3_desc: 'Providing credible CPO market movement data to help business players make logistical decisions.',
+          about_developers_title: 'Our Developers',
 
           // Subscription
           subscription_title: 'Choose Subscription Plan',

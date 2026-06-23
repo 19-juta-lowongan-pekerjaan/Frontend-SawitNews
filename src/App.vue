@@ -19,7 +19,7 @@
           <div class="absolute inset-2 border border-slate-100 rounded-full bg-slate-50/50 shadow-inner"></div>
           
           <img 
-            src="/Gemini_Generated_Image_bey94kbey94kbey9-removebg-preview.png"
+            src="/icon-sawit.svg"
             class="h-16 w-16 object-contain relative z-10 filter drop-shadow-[0_4px_10px_rgba(34,197,94,0.15)]"
             alt="SawitNews Logo"
           />
@@ -76,6 +76,9 @@
 
     <!-- App-wide Floating Toast Notifications -->
     <Notification />
+
+    <!-- Mobile Navigation Drawer -->
+    <AppMobileDrawer />
   </div>
 </template>
 
@@ -85,6 +88,7 @@ import { useUiStore } from './stores/ui'
 import AppHeader from './components/layout/AppHeader.vue'
 import AppFooter from './components/layout/AppFooter.vue'
 import Notification from './components/common/Notification.vue'
+import AppMobileDrawer from './components/layout/AppMobileDrawer.vue'
 
 const uiStore = useUiStore()
 const showSplash = ref(true)

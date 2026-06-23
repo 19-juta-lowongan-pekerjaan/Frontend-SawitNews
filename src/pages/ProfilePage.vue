@@ -18,9 +18,10 @@
           <!-- Avatar -->
           <div class="relative inline-block group">
             <img 
-              :src="previewAvatar || getImageUrl(profileData.avatar) || 'https://www.gravatar.com/avatar/?d=mp'" 
+              :src="previewAvatar || getImageUrl(profileData.avatar) || getDefaultAvatar(profileData.name || profileData.username || '?')" 
               class="h-28 w-28 rounded-full object-cover mx-auto ring-4 ring-primary/20 shadow-lg"
               alt="Profile Avatar"
+              @error="(e) => e.target.src = getDefaultAvatar(profileData.name || profileData.username || '?')"
             />
             <!-- Actual image change -->
             <input type="file" ref="avatarInput" @change="handleAvatarChange" accept="image/*" class="hidden" />
@@ -168,7 +169,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import { useArticleStore } from '../stores/articles'
 import { useUiStore } from '../stores/ui'
-import { formatDate, getImageUrl } from '../utils/formatters'
+import { formatDate, getImageUrl, getDefaultAvatar } from '../utils/formatters'
 import UserStats from '../components/users/UserStats.vue'
 import UserRank from '../components/users/UserRank.vue'
 import UserBadges from '../components/users/UserBadges.vue'
@@ -222,7 +223,7 @@ const loadProfile = async () => {
         id: profileId,
         name: 'Kontributor SawitNews',
         username: 'kontributor_sawit',
-        avatar: 'https://www.gravatar.com/avatar/?d=mp',
+        avatar: null,
         rank: 'Benih',
         badges: ['Pemula'],
         stats: { articles: 0, views: 0, likes: 0 },
@@ -240,7 +241,7 @@ const setProfile = (u) => {
   profileData.name = u.displayName || u.name || u.username
   profileData.username = u.username
   profileData.email = u.email || ''
-  profileData.avatar = u.avatar || 'https://www.gravatar.com/avatar/?d=mp'
+  profileData.avatar = u.avatar || null
   profileData.rank = u.rank?.name || u.rank || 'Benih'
   
   // Ranks badges mapping helper

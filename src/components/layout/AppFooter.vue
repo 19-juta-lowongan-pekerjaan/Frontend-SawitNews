@@ -5,7 +5,7 @@
         <div class="md:col-span-2 space-y-4">
           <div class="flex items-center gap-2">
             <img 
-              src="/Gemini_Generated_Image_bey94kbey94kbey9-removebg-preview.png"
+              src="/icon-sawit.svg"
               class="h-7 w-7 object-contain dark:brightness-0 dark:invert"
               alt="SawitNews Logo"
             />

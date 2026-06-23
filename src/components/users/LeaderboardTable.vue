@@ -84,9 +84,9 @@
               <td class="py-4 px-6">
                 <div class="flex items-center gap-3">
                   <img 
-                    :src="getImageUrl(user.avatar) || 'https://www.gravatar.com/avatar/?d=mp'" 
+                    :src="getImageUrl(user.avatar) || getDefaultAvatar(user.displayName || user.username || '?')" 
                     class="h-9 w-9 rounded-full object-cover shadow-inner"
-                    @error="(e) => e.target.src = 'https://www.gravatar.com/avatar/?d=mp'"
+                    @error="(e) => e.target.src = getDefaultAvatar(user.displayName || user.username || '?')"
                   />
                   <div class="flex flex-col leading-tight">
                     <router-link :to="`/profil/${user.id}`" class="font-bold text-slate-800 hover:text-primary transition-colors dark:text-white">
@@ -167,7 +167,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { getBadge, getImageUrl } from '../../utils/formatters'
+import { getBadge, getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 import { useUiStore } from '../../stores/ui'
 import usersApi from '../../api/users'
 
