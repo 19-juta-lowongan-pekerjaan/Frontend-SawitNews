@@ -39,8 +39,8 @@ export default {
   publishArticle(id) {
     return api.post(`/articles/${id}/publish`)
   },
-  likeArticle(id) {
-    return api.post(`/articles/${id}/like`)
+  toggleLikeArticle(id) {
+    return api.post(`/articles/${id}/toggle-like`)
   },
   // Verify — backend accepts both PUT and POST at /articles/:id/verify
   verifyArticle(id, action, reason) {

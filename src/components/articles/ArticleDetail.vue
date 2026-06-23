@@ -96,10 +96,10 @@
       <div class="flex items-center justify-between pt-6 border-t border-slate-50 dark:border-slate-700/50 mt-10">
         <!-- Likes -->
         <button 
-          @click="likeArticle"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gray-100 bg-white hover:bg-red-50 hover:text-red-500 transition-all duration-200 shadow-sm text-sm font-bold text-gray-700 dark:bg-slate-800 dark:border-slate-700 dark:text-gray-300 dark:hover:bg-red-950/20 transform active:scale-95"
+          @click="toggleLikeArticle"
+          :class="['inline-flex items-center gap-2 px-5 py-2.5 rounded-full border transition-all duration-200 shadow-sm text-sm font-bold transform active:scale-95', article.isLiked ? 'bg-red-500 text-white border-red-500' : 'bg-white text-gray-700 border-gray-100 hover:bg-red-50 hover:text-red-500 dark:bg-slate-800 dark:border-slate-700 dark:text-gray-300 dark:hover:bg-red-950/20']"
         >
-          <svg class="h-5 w-5 text-red-500 fill-red-500 animate-pulse" viewBox="0 0 24 24">
+          <svg class="h-5 w-5" :class="[article.isLiked ? 'text-white' : 'text-red-500']" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
           {{ uiStore.t('like') }} ({{ article.likes }})
@@ -189,9 +189,8 @@ const relatedArticles = computed(() => {
     .slice(0, 2)
 })
 
-const likeArticle = () => {
-  articleStore.likeArticle(props.article.id)
-  uiStore.showNotification(uiStore.t('liked_notification'), 'success')
+const toggleLikeArticle = () => {
+  articleStore.toggleLikeArticle(props.article.id)
 }
 
 const shareArticle = () => {

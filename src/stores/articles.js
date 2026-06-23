@@ -273,23 +273,14 @@ export const useArticleStore = defineStore('articles', {
       }
     },
 
-    async likeArticle(id) {
+    async toggleLikeArticle(id) {
       try {
-        const res = await articlesApi.likeArticle(id)
-        const { likes } = res.data.data || {}
-        // Update like count in all cached lists
-        const updateLikes = (list) => {
-          const art = list.find(a => a.id === id)
-          if (art && likes !== undefined) art.likes = likes
-        }
-        updateLikes(this.articles)
-        updateLikes(this.trendingArticles)
-        updateLikes(this.featuredArticles)
-        if (this.currentArticle?.id === id && likes !== undefined) {
-          this.currentArticle.likes = likes
+        await articlesApi.toggleLikeArticle(id)
+        if (this.currentArticle?.id === id) {
+          await this.fetchArticle(id)
         }
       } catch (err) {
-        console.error('likeArticle error:', err)
+        console.error('toggleLikeArticle error:', err)
       }
     },
 
