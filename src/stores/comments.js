@@ -65,7 +65,7 @@ export const useCommentStore = defineStore('comments', {
             parent.replies.push(newComment)
           }
         } else {
-          this.comments.unshift(newComment) // Insert at the beginning of the list
+          this.comments.unshift(newComment)
         }
         uiStore.showNotification('Komentar berhasil dikirim!', 'success')
         return newComment
@@ -76,17 +76,49 @@ export const useCommentStore = defineStore('comments', {
       }
     },
 
+    async updateComment(id, content) {
+      const uiStore = useUiStore()
+      try {
+        const res = await commentsApi.updateComment(id, { content })
+        const updatedComment = formatComment(res.data.data)
+        
+        const comment = this.comments.find(c => c.id === id)
+        if (comment) {
+          Object.assign(comment, updatedComment)
+        } else {
+          for (const c of this.comments) {
+            const reply = c.replies.find(r => r.id === id)
+            if (reply) {
+              Object.assign(reply, updatedComment)
+              break
+            }
+          }
+        }
+        uiStore.showNotification('Komentar berhasil diperbarui.', 'success')
+      } catch (err) {
+        console.error('Failed to update comment:', err)
+        uiStore.showNotification(err.response?.data?.message || 'Gagal memperbarui komentar.', 'error')
+        throw err
+      }
+    },
+
     async deleteComment(id) {
       const uiStore = useUiStore()
       try {
         await commentsApi.deleteComment(id)
-        this.comments = this.comments.filter(c => c.id !== id)
-        // Also check replies in case it's a nested reply
-        this.comments.forEach(c => {
-          if (c.replies) {
-            c.replies = c.replies.filter(r => r.id !== id)
+        
+        const comment = this.comments.find(c => c.id === id)
+        if (comment) {
+          comment.isDeleted = true
+        } else {
+          for (const c of this.comments) {
+            const reply = c.replies.find(r => r.id === id)
+            if (reply) {
+              reply.isDeleted = true
+              break
+            }
           }
-        })
+        }
         uiStore.showNotification('Komentar berhasil dihapus.', 'success')
       } catch (err) {
         console.error('Failed to delete comment:', err)

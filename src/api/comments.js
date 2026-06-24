@@ -7,6 +7,9 @@ export default {
   postComment(articleId, data) {
     return api.post(`/articles/${articleId}/comments`, data)
   },
+  updateComment(id, data) {
+    return api.put(`/comments/${id}`, data)
+  },
   deleteComment(id) {
     return api.delete(`/comments/${id}`)
   },
