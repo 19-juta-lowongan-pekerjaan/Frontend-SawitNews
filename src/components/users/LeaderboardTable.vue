@@ -21,12 +21,13 @@
         <span class="font-bold text-gray-500 dark:text-gray-400">{{ uiStore.t('sort_by') }}</span>
         <select 
           v-model="sortBy"
+          @change="fetchLeaderboard"
           class="px-3 py-1.5 bg-slate-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-slate-900 dark:border-slate-800 dark:text-gray-300"
         >
-          <option value="points">{{ uiStore.t('reputation_points') }}</option>
-          <option value="articles">{{ uiStore.t('total_articles') }}</option>
-          <option value="views">{{ uiStore.t('total_readers') }}</option>
-          <option value="likes">{{ uiStore.t('total_likes') }}</option>
+          <option value="totalArticles">{{ uiStore.t('total_articles') }}</option>
+          <option value="totalViews">{{ uiStore.t('total_readers') }}</option>
+          <option value="totalLikes">{{ uiStore.t('total_likes') }}</option>
+          <option value="totalComments">{{ uiStore.t('total_comments') }}</option>
         </select>
       </div>
     </div>
@@ -48,7 +49,7 @@
               <th class="py-4 px-6 text-center">{{ uiStore.t('table_articles') }}</th>
               <th class="py-4 px-6 text-center">{{ uiStore.t('table_readers') }}</th>
               <th class="py-4 px-6 text-center">{{ uiStore.t('table_likes') }}</th>
-              <th class="py-4 px-6 text-right">{{ uiStore.t('table_reputation') }}</th>
+              <th class="py-4 px-6 text-center">{{ uiStore.t('table_comments') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-50 dark:divide-slate-700/50">
@@ -101,10 +102,10 @@
               <td class="py-4 px-6">
                 <span 
                   class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xxs font-bold shadow-sm"
-                  :class="[getBadge(user.rankName).bg, getBadge(user.rankName).text]"
+                  :class="[getBadge(user.rank?.name).bg, getBadge(user.rank?.name).text]"
                 >
-                  <span class="w-4 h-4 flex items-center justify-center" v-html="getBadge(user.rankName).icon"></span>
-                  <span>{{ user.rankName || '-' }}</span>
+                  <span class="w-4 h-4 flex items-center justify-center" v-html="getBadge(user.rank?.name).icon"></span>
+                  <span>{{ user.rank?.name || '-' }}</span>
                 </span>
               </td>
 
@@ -123,9 +124,9 @@
                 {{ formatNumber(user.totalLikes || 0) }}
               </td>
 
-              <!-- Reputation points -->
-              <td class="py-4 px-6 text-right font-black text-primary text-sm dark:text-primary-light">
-                {{ formatNumber(user.points) }} XP
+              <!-- Comments Count -->
+              <td class="py-4 px-6 text-center font-semibold text-slate-600 dark:text-slate-300">
+                {{ formatNumber(user.totalComments || 0) }}
               </td>
             </tr>
 
@@ -166,7 +167,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { getBadge, getImageUrl, getDefaultAvatar } from '../../utils/formatters'
 import { useUiStore } from '../../stores/ui'
 import usersApi from '../../api/users'
@@ -174,52 +175,44 @@ import usersApi from '../../api/users'
 const uiStore = useUiStore()
 
 const searchQuery = ref('')
-const sortBy = ref('points')
+const sortBy = ref('totalArticles')
 const page = ref(1)
 const limit = ref(10)
 const loading = ref(false)
 const allUsers = ref([])
 
-onMounted(async () => {
+const fetchLeaderboard = async () => {
   loading.value = true
   try {
-    const res = await usersApi.getLeaderboard()
+    const params = {
+      limit: 100, // Fetch more to allow for client-side search
+      sortBy: sortBy.value,
+      sortOrder: 'desc',
+    }
+    const res = await usersApi.getLeaderboard(params)
     const data = res.data?.data || res.data || []
-    // Support both array and paginated response
-    const list = Array.isArray(data) ? data : (data.data || data.users || [])
-    // Map API fields to component fields
-    allUsers.value = list.map(u => ({
-      ...u,
-      rankName: u.rank?.name || u.rankName || u.rank || '',
-      points: (u.totalArticles || 0) * 50 + (u.totalViews || 0) * 1 + (u.totalLikes || 0) * 5
-    }))
+    allUsers.value = Array.isArray(data) ? data : (data.data || data.users || [])
   } catch (err) {
     console.error('Failed to load leaderboard:', err)
     allUsers.value = []
   } finally {
     loading.value = false
   }
-})
+}
+
+onMounted(fetchLeaderboard)
+
+watch(sortBy, fetchLeaderboard)
 
 const filteredUsers = computed(() => {
-  let list = [...allUsers.value]
-  
-  if (searchQuery.value) {
-    const q = searchQuery.value.toLowerCase()
-    list = list.filter(u => 
-      (u.displayName || '').toLowerCase().includes(q) || 
-      (u.username || '').toLowerCase().includes(q)
-    )
+  if (!searchQuery.value) {
+    return allUsers.value
   }
-  
-  list.sort((a, b) => {
-    if (sortBy.value === 'articles') return (b.totalArticles || 0) - (a.totalArticles || 0)
-    if (sortBy.value === 'views') return (b.totalViews || 0) - (a.totalViews || 0)
-    if (sortBy.value === 'likes') return (b.totalLikes || 0) - (a.totalLikes || 0)
-    return (b.points || 0) - (a.points || 0)
-  })
-  
-  return list
+  const q = searchQuery.value.toLowerCase()
+  return allUsers.value.filter(u =>
+    (u.displayName || '').toLowerCase().includes(q) ||
+    (u.username || '').toLowerCase().includes(q)
+  )
 })
 
 const totalPages = computed(() => Math.ceil(filteredUsers.value.length / limit.value) || 1)
