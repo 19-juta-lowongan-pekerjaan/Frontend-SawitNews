@@ -30,7 +30,7 @@
         <button 
           @click="uiStore.setSidebar(false)"
           class="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-800"
-          title="Tutup Menu"
+          :title="uiStore.t('close_menu')"
         >
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -42,7 +42,7 @@
       <div class="flex-1 overflow-y-auto py-6 space-y-6 pr-1 -mr-2">
         <!-- Main Navigation Links -->
         <div class="space-y-1">
-          <h4 class="text-xxs font-black uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2 px-2">Menu</h4>
+          <h4 class="text-xxs font-black uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2 px-2">{{ uiStore.t('menu') }}</h4>
           <router-link 
             to="/" 
             @click="uiStore.setSidebar(false)" 
@@ -123,7 +123,7 @@
 
         <!-- Toggles Section (Theme & Language) -->
         <div class="space-y-3 pt-4 border-t border-gray-100 dark:border-slate-800">
-          <h4 class="text-xxs font-black uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1 px-2">Pengaturan</h4>
+          <h4 class="text-xxs font-black uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1 px-2">{{ uiStore.t('settings') }}</h4>
           <div class="grid grid-cols-2 gap-2">
             <!-- Theme Toggle -->
             <button 
@@ -138,7 +138,7 @@
               <svg v-else class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
-              <span class="text-xs font-semibold">Tema</span>
+              <span class="text-xs font-semibold">{{ uiStore.t('theme') }}</span>
             </button>
 
             <!-- Language Toggle -->
@@ -181,21 +181,21 @@
               @click="uiStore.setSidebar(false)"
               class="flex items-center justify-center p-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-xl text-xs font-bold dark:bg-slate-850 dark:text-gray-300 dark:hover:bg-slate-800 transition-all"
             >
-              Profil
+              {{ uiStore.t('profile_short') }}
             </router-link>
             <router-link 
               to="/buat-artikel" 
               @click="uiStore.setSidebar(false)"
               class="flex items-center justify-center p-2 bg-primary/10 text-primary hover:bg-primary/15 rounded-xl text-xs font-bold dark:bg-primary/20 dark:text-primary-light transition-all"
             >
-              Tulis
+              {{ uiStore.t('write_short') }}
             </router-link>
             <router-link 
               to="/artikel-saya" 
               @click="uiStore.setSidebar(false)"
               class="flex items-center justify-center p-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-xl text-xs font-bold dark:bg-slate-850 dark:text-gray-300 dark:hover:bg-slate-800 transition-all"
             >
-              Artikelku
+              {{ uiStore.t('my_articles_short') }}
             </router-link>
             <router-link 
               v-if="authStore.isAdmin"
@@ -203,7 +203,7 @@
               @click="uiStore.setSidebar(false)"
               class="flex items-center justify-center p-2 bg-red-50 text-red-650 hover:bg-red-100 rounded-xl text-xs font-bold dark:bg-red-950/20 dark:text-red-400 transition-all col-span-1"
             >
-              Admin
+              {{ uiStore.t('admin_short') }}
             </router-link>
             <router-link 
               v-else
@@ -211,7 +211,7 @@
               @click="uiStore.setSidebar(false)"
               class="flex items-center justify-center p-2 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-xl text-xs font-bold dark:bg-slate-850 dark:text-gray-300 dark:hover:bg-slate-800 transition-all"
             >
-              Rank
+              {{ uiStore.t('rank_short') }}
             </router-link>
           </div>
 

@@ -75,16 +75,36 @@
     <AppFooter />
 
     <!-- App-wide Floating Toast Notifications -->
-    <Notification />
-
-    <!-- Mobile Navigation Drawer -->
-    <AppMobileDrawer />
+    <!-- Removed from here to prevent absolute layout bugs due to scale transform on parent -->
   </div>
+
+  <!-- Global Floating Write Button -->
+  <router-link 
+    v-if="showWriteButton"
+    to="/buat-artikel" 
+    class="fixed bottom-6 right-6 z-40 h-14 w-14 bg-primary hover:bg-primary-hover text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center font-bold text-2xl shadow-primary/20 group"
+    :title="uiStore.t('write_new_article_tooltip')"
+  >
+    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+    </svg>
+    <!-- Tooltip -->
+    <span class="absolute right-full mr-3 bg-slate-900 text-white text-xxs font-bold px-2 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow">
+      {{ uiStore.t('write_article') }}
+    </span>
+  </router-link>
+
+  <!-- Mobile Navigation Drawer (Moved outside transformed container to fix layout/positioning bugs) -->
+  <AppMobileDrawer />
+
+  <!-- App-wide Toast Notification Container (Moved outside transformed container) -->
+  <Notification />
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useUiStore } from './stores/ui'
+import { useRoute } from 'vue-router'
 import AppHeader from './components/layout/AppHeader.vue'
 import AppFooter from './components/layout/AppFooter.vue'
 import Notification from './components/common/Notification.vue'
@@ -92,6 +112,11 @@ import AppMobileDrawer from './components/layout/AppMobileDrawer.vue'
 
 const uiStore = useUiStore()
 const showSplash = ref(true)
+const route = useRoute()
+
+const showWriteButton = computed(() => {
+  return !['/buat-artikel', '/edit-artikel'].some(path => route.path.startsWith(path))
+})
 
 onMounted(() => {
   uiStore.initTheme()

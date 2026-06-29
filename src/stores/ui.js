@@ -41,6 +41,7 @@ export const useUiStore = defineStore('ui', {
     t(key) {
       const translations = {
         id: {
+          menu: 'Menu',
           home: 'Home',
           news: 'Berita',
           leaderboard: 'Leaderboard',
@@ -60,6 +61,14 @@ export const useUiStore = defineStore('ui', {
           admin_panel: 'Admin Panel',
           logged_in_as: 'Masuk sebagai',
           write_new_article_tooltip: 'Tulis Artikel Baru',
+          profile_short: 'Profil',
+          write_short: 'Tulis',
+          my_articles_short: 'Artikelku',
+          admin_short: 'Admin',
+          rank_short: 'Rank',
+          settings: 'Pengaturan',
+          theme: 'Tema',
+          close_menu: 'Tutup Menu',
 
           // Article List Page
           article_list_title: 'Daftar Berita Kelapa Sawit',
@@ -358,6 +367,7 @@ export const useUiStore = defineStore('ui', {
           trending_today_desc: 'Artikel dengan interaksi dan pembaca terbanyak',
         },
         en: {
+          menu: 'Menu',
           home: 'Home',
           news: 'News',
           leaderboard: 'Leaderboard',
@@ -377,6 +387,14 @@ export const useUiStore = defineStore('ui', {
           admin_panel: 'Admin Panel',
           logged_in_as: 'Logged in as',
           write_new_article_tooltip: 'Write New Article',
+          profile_short: 'Profile',
+          write_short: 'Write',
+          my_articles_short: 'My Articles',
+          admin_short: 'Admin',
+          rank_short: 'Rank',
+          settings: 'Settings',
+          theme: 'Theme',
+          close_menu: 'Close Menu',
 
           // Article List Page
           article_list_title: 'Sawit News List',

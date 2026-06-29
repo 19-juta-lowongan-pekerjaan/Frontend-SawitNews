@@ -37,11 +37,6 @@
         <!-- Trending Widget -->
         <TrendingSidebar :articles="articleStore.trendingArticles" />
 
-        <!-- Categories Sidebar Navigation -->
-        <div class="hidden lg:block">
-          <AppSidebar />
-        </div>
-
         <!-- Newsletter Signup Premium Box -->
         <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden space-y-4 border border-slate-800">
           <div class="absolute -right-12 -top-12 opacity-10">
@@ -72,22 +67,14 @@
             </button>
           </div>
         </div>
+
+        <!-- Categories Sidebar Navigation -->
+        <div class="hidden lg:block">
+          <AppSidebar />
+        </div>
       </div>
     </div>
 
-    <router-link 
-      to="/buat-artikel" 
-      class="fixed bottom-6 right-6 z-40 h-14 w-14 bg-primary hover:bg-primary-hover text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center font-bold text-2xl shadow-primary/20 group"
-      :title="uiStore.t('write_new_article_tooltip')"
-    >
-      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
-      </svg>
-      <!-- Tooltip -->
-      <span class="absolute right-full mr-3 bg-slate-900 text-white text-xxs font-bold px-2 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow">
-        {{ uiStore.t('write_article') }}
-      </span>
-    </router-link>
   </div>
 </template>
 
